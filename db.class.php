@@ -14,6 +14,15 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+
+    Modified by Matt Tognetti (mjtognetti@gmail.com)
+
+    Changes:
+      call(), line 90 - static access to call() - February 10, 2012    
+      call(), line 674 - allows use of stored procedures - February 10, 2012
+      freeAllResults(), line 682 - frees all mysql results - February 10, 2012
 */
 
 
