@@ -77,6 +77,8 @@ class DB {
   public static function replace() { $args = func_get_args(); return call_user_func_array(array(DB::getMDB(), 'replace'), $args); }
   public static function update() { $args = func_get_args(); return call_user_func_array(array(DB::getMDB(), 'update'), $args); }
   public static function delete() { $args = func_get_args(); return call_user_func_array(array(DB::getMDB(), 'delete'), $args); }
+
+  public static function call() { $args = func_get_args(); return call_user_func_array(array(DB::getMDB(), 'call'), $args); }
   
   public static function insertId() { $args = func_get_args(); return call_user_func_array(array(DB::getMDB(), 'insertId'), $args); }
   public static function count() { $args = func_get_args(); return call_user_func_array(array(DB::getMDB(), 'count'), $args); }
@@ -658,6 +660,23 @@ class MeekroDB {
     }  
     
     return $row[$column];
+  }
+
+  public function call() {
+    $args = func_get_args();
+    $result = call_user_func_array(array($this, 'query'), $args);
+
+    $this->freeAllResults();
+    return $result;
+  }
+
+  public function freeAllResults() {
+    $db = $this->get();
+    
+    while($db->more_results()) {
+      $db->next_result();
+      $this->freeResult($db->use_result());
+    }
   }
   
   protected function checkError() {
